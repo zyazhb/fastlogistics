@@ -1,0 +1,13 @@
+[[source]]
+url = "http://pypi.douban.com/simple/"
+verify_ssl = false
+name = "pypi"
+
+[packages]
+numpy = "*"
+matplotlib = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
