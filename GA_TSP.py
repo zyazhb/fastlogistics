@@ -3,14 +3,15 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-##### 计算距离
+# 计算距离
 
 def Distanse(Cities):
     num = Cities.shape[0]  # 城市个数
     Dis = np.zeros(shape=(num, num))
     for i in range(num):
         for j in range(num):
-            Dis[i, j] = ((Cities[i, 0] - Cities[j, 0]) ** 2 + (Cities[i, 1] - Cities[j, 1]) ** 2) ** 0.5
+            Dis[i, j] = ((Cities[i, 0] - Cities[j, 0]) ** 2 +
+                         (Cities[i, 1] - Cities[j, 1]) ** 2) ** 0.5
     return Dis
 
 
@@ -38,7 +39,7 @@ def PathLengh(Dis, Chrom):
     return 1 / Objv
 
 
-##### 选择操作
+# 选择操作
 
 def Select(Chrom, Objv, GGap):
     num1 = int(np.rint(Chrom.shape[0] * GGap))
@@ -49,7 +50,7 @@ def Select(Chrom, Objv, GGap):
     return newpop
 
 
-##### 交叉
+# 交叉
 
 def Recombin(SelCh, Pc):
     SelCh = SelCh.astype(np.int16)
@@ -71,7 +72,7 @@ def Recombin(SelCh, Pc):
             a0.append(i)
 
         b = []
-        for i in SelCh[flag, :]:  ### 0->T
+        for i in SelCh[flag, :]:  # 0->T
             b.append(i)
 
         re = []
@@ -112,84 +113,88 @@ def Insert(SelCh, GGap, Nind):
     return np.concatenate([SelCh, Newpop], 0)
 
 
-## mian
+# mian
+def main():
+    Cities = np.array(
+        [[126.31227, 45.38355], [126.61686, 45.75567], [126.56279, 45.80825], [126.58796, 45.88899], [127.4035, 46.08536],
+         [128.04392, 45.95038], [128.74607, 45.9901],
+         [129.56859, 46.32489], [128.82707, 45.85253], [127.96027,
+                                                        45.21102], [127.16746, 44.93191], [128.33162, 45.4519],
+         [127.48586, 45.75864], [126.95717, 45.54774],
+         [126.64932, 45.79201], [126.66837, 45.76021], [126.66287, 45.70847], [126.63768, 45.59799]])  # 城市坐标
+    Nind = 1000  # 种群大小
+    MaxGen = 100  # 最大迭代次数
+    Pc = 0.9  # 交叉概率
+    Pm = 0.1  # 变异概率
+    GGap = 0.9  # 选择概率
+    num = Cities.shape[0]  # 城市个数
+    Dis = Distanse(Cities)  # 计算距离
 
-Cities = np.array(
-    [[126.31227, 45.38355], [126.61686, 45.75567], [126.56279, 45.80825], [126.58796, 45.88899], [127.4035, 46.08536],
-     [128.04392, 45.95038], [128.74607, 45.9901],
-     [129.56859, 46.32489], [128.82707, 45.85253], [127.96027, 45.21102], [127.16746, 44.93191], [128.33162, 45.4519],
-     [127.48586, 45.75864], [126.95717, 45.54774],
-     [126.64932, 45.79201], [126.66837, 45.76021], [126.66287, 45.70847], [126.63768, 45.59799]])  # 城市坐标
-Nind = 1000  # 种群大小
-MaxGen = 100  # 最大迭代次数
-Pc = 0.9  # 交叉概率
-Pm = 0.1  # 变异概率
-GGap = 0.9  # 选择概率
-num = Cities.shape[0]  # 城市个数
-Dis = Distanse(Cities)  # 计算距离
+    Objv_Best = np.zeros(MaxGen)
+    Gen_Best = np.zeros(shape=(MaxGen, num))
 
-Objv_Best = np.zeros(MaxGen)
-Gen_Best = np.zeros(shape=(MaxGen, num))
+    # 初始化种群
+    Chrom = Initpop(Nind, num)
 
-##初始化种群
-Chrom = Initpop(Nind, num)
+    # 迭代
+    for gen in range(MaxGen):
+        # 计算适应度
+        Objv = PathLengh(Dis, Chrom)
+        Objv_Best[gen] = (max(Objv))
+        Gen_Bests = Chrom[Objv == max(Objv), :]
+        Gen_Best[gen, :] = Gen_Bests[0, :]
 
-##迭代
-for gen in range(MaxGen):
-    ##计算适应度
-    Objv = PathLengh(Dis, Chrom)
-    Objv_Best[gen] = (max(Objv))
-    Gen_Bests = Chrom[Objv == max(Objv), :]
-    Gen_Best[gen, :] = Gen_Bests[0, :]
+        # 选择
+        SelCh = Select(Chrom, Objv, GGap)
 
-    ##选择
-    SelCh = Select(Chrom, Objv, GGap)
+        # 交叉
+        SelCh = Recombin(SelCh, Pc)
 
-    ##交叉
-    SelCh = Recombin(SelCh, Pc)
+        # 变异
+        SelCh = Mutate(SelCh, Pm)
 
-    ##变异
-    SelCh = Mutate(SelCh, Pm)
+        # 插入新个体
+        Chrom = Insert(SelCh, GGap, Nind)
 
-    ##插入新个体
-    Chrom = Insert(SelCh, GGap, Nind)
+    # 画图
 
-#### 画图
+    plt.figure(1)
+    x = np.array(range(MaxGen))
+    BEST = Gen_Best[Objv_Best == max(Objv_Best), :]
+    for i in range(MaxGen - 1):
+        Objv_Best[i + 1] = max(Objv_Best[i], Objv_Best[i + 1])
+    plt.plot(x, 1 / Objv_Best, 'b-.')
 
+    # 解决中文显示问题
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
 
-plt.figure(1)
-x = np.array(range(MaxGen))
-BEST = Gen_Best[Objv_Best == max(Objv_Best), :]
-for i in range(MaxGen - 1):
-    Objv_Best[i + 1] = max(Objv_Best[i], Objv_Best[i + 1])
-plt.plot(x, 1 / Objv_Best, 'b-.')
+    plt.title(f' 最短路径为:{1/Objv_Best[-1]}')
+    plt.legend
+    # plt.show()
+    # plt.savefig('diedaigcheng.png',dpi = 500 ,bbox_inches = 'tight' ) #保存图片
 
-# 解决中文显示问题
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
+    print(f"最短路径为:{1 / Objv_Best[-1]}")
 
-plt.title(f' 最短路径为:{1/Objv_Best[-1]}')
-plt.legend
-# plt.show()
-# plt.savefig('diedaigcheng.png',dpi = 500 ,bbox_inches = 'tight' ) #保存图片
+    plt.figure(2)
+    X = []
+    Y = []
+    for i in range(num):
+        X.append(Cities[int(BEST[0, i]), 0])
+        Y.append(Cities[int(BEST[0, i]), 1])
+    X.append(Cities[int(BEST[0, 0]), 0])
+    Y.append(Cities[int(BEST[0, 0]), 1])
 
-print(f"最短路径为:{1 / Objv_Best[-1]}")
+    print(X, Y)
+    plt.plot(X, Y)
+    plt.scatter(Cities[:, 0], Cities[:, 1], color='m', marker='D', alpha=1)
+    # 解决中文显示问题
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
 
-plt.figure(2)
-X = []
-Y = []
-for i in range(num):
-    X.append(Cities[int(BEST[0, i]), 0])
-    Y.append(Cities[int(BEST[0, i]), 1])
-X.append(Cities[int(BEST[0, 0]), 0])
-Y.append(Cities[int(BEST[0, 0]), 1])
-plt.plot(X, Y)
-plt.scatter(Cities[:, 0], Cities[:, 1], color='m', marker='D', alpha=1)
-# 解决中文显示问题
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
+    plt.title(f' 最短路径为:{1/Objv_Best[-1]}')
+    plt.legend
 
-plt.title(f' 最短路径为:{1/Objv_Best[-1]}')
-plt.legend
+    plt.show()
 
-plt.show()
+    return X, Y
