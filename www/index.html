@@ -1,35 +1,54 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <style type="text/css">
-      body,html,#container{
-        width: 100%;
-        height: 100%;
-        margin: 0px
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <style type="text/css">
+    body,
+    html,
+    #container {
+      width: 100%;
+      height: 100%;
+      margin: 0px
+    }
+  </style>
+  <title>API加载</title>
+</head>
+
+<body>
+  <div id="container" tabindex="0"></div>
+  <script type="text/javascript">
+    window.init = function () {
+      var map = new AMap.Map('container', {
+        resizeEnable: true,
+        // center: [116.480983, 39.989628],
+        zoom: 8
+      });
+      if (location.href.indexOf('guide=1') !== -1) {
+        map.setStatus({ scrollWheel: false });
+        map.plugin(["AMap.ToolBar"], function () {
+          map.addControl(new AMap.ToolBar({ liteStyle: true }))
+        });
       }
-    </style>
-    <title>API加载</title>
-  </head>
-  <body>
-    <div id="container" tabindex="0"></div>
-    <script type="text/javascript">
-        window.init = function(){
-            var map = new AMap.Map('container', {
-               resizeEnable: true,
-               center:[116.480983, 39.989628],
-               zoom:11
-            });
-            if (location.href.indexOf('guide=1') !== -1) {
-                map.setStatus({scrollWheel: false});
-                map.plugin(["AMap.ToolBar"], function() {
-                  map.addControl(new AMap.ToolBar({liteStyle:true}))
-                });
-            }
-          }
-    </script>
-    <script src="https://webapi.amap.com/maps?v=1.4.15&key=510032adf681277699fd944dce14365f&callback=init"></script>
-  </body>
+
+      var markers = [];
+      var positions = [[126.61686, 45.75567], [126.56279, 45.80825], [126.58796, 45.88899], [126.64932, 45.79201], [126.66837, 45.76021], [126.66287, 45.70847], [126.63768, 45.59799], [126.31227, 45.38355], [127.16746, 44.93191], [127.96027, 45.21102], [128.33162, 45.4519], [128.82707, 45.85253], [129.56859, 46.32489], [128.74607, 45.9901], [128.04392, 45.95038], [127.4035, 46.08536], [127.48586, 45.75864], [126.95717, 45.54774], [126.61686, 45.75567]];
+
+      for (var i = 0, marker; i < positions.length; i++) {
+
+        marker = new AMap.Marker({
+          map: map,
+          // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-' + (i + 1) + '.png',
+          position: positions[i]
+        });
+
+        markers.push(marker);
+      }
+    }
+  </script>
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=510032adf681277699fd944dce14365f&callback=init"></script>
+</body>
+
 </html>
