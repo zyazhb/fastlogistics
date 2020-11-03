@@ -1,1 +1,1 @@
-uvicorn main:app
+pipenv run uvicorn main:app
