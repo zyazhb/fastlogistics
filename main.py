@@ -3,6 +3,10 @@ from typing import Optional
 from fastapi import FastAPI
 
 import GA_TSP
+import calc
+
+import requests
+import time
 
 app = FastAPI()
 
@@ -26,6 +30,19 @@ def tsp():
     for i in range(0, len(X)):
         markers += str(X[i])+","+str(Y[i])+";"
     return "https://restapi.amap.com/v3/staticmap?markers="+markers[:-1]+"&key="+mapkey
+
+
+@app.get("/calc")
+def tsp():
+    markers = "mid,0xFF0000,A:"
+    Best_path = calc.main()
+    url = "https://ae770067-27eb-4c02-b5cd-9620231fb68e.bspapp.com/"
+    data = {"creatTime": time.now(), "maekers": Best_path}
+    requests.post(url, data=data)
+    return Best_path
+    # for i in range(0, len(X)):
+    #     markers += str(X[i])+","+str(Y[i])+";"
+    # return "https://restapi.amap.com/v3/staticmap?markers="+markers[:-1]+"&key="+mapkey
 
 
 @app.get("/items/{item_id}")
