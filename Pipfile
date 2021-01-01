@@ -9,9 +9,10 @@ matplotlib = "*"
 uvicorn = "*"
 fastapi = "*"
 pandas = "*"
-xlrd = "*"
+xlrd = "1.0"
 requests = "*"
 autopep8 = "*"
+flask = "*"
 
 [dev-packages]
 
