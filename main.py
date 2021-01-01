@@ -69,27 +69,27 @@ def calc():
 
 @app.get("/testpost")
 def testpost():
-    import pandas as pd
-    data = pd.read_excel('./order.xlsx')
-    print(data)
+    # import pandas as pd
+    # data = pd.read_excel('./order.xlsx')
+    # print(data)
 
     Best_path = [[18], [18, 10, 6, 11, 12], [12], [12], [9, 15, 3, 21], [
         11, 4], [4, 17], [5, 7, 20], [2, 19, 16, 14], [14, 13, 8, 1], [1]]
 
-    dictdata = {}
-    for idx, line in enumerate(Best_path):
-        for place in line:
-            dictdata["id"] = idx
-            # dictdata["name"] =
-            # dictdata["latitude"] =
-            # dictdata["latitude"] =
-            dictdata["cartype"] = Best_path[idx][1]
-            dictdata["createTime"] = time.time()
+    # dictdata = {}
+    # for idx, line in enumerate(Best_path):
+    #     for place in line:
+    #         dictdata["id"] = idx
+    #         # dictdata["name"] =
+    #         # dictdata["latitude"] =
+    #         # dictdata["latitude"] =
+    #         dictdata["cartype"] = Best_path[idx][1]
+    #         dictdata["createTime"] = time.time()
 
     # jsondata = json.encoder(Best_path)
     url = "https://ae770067-27eb-4c02-b5cd-9620231fb68e.bspapp.com/http/add"
-    # data = {"makers": str(Best_path)}
-    r = requests.post(url, data=dictdata)
+    data = {"makers": str(Best_path).replace(' ','')}
+    r = requests.post(url, data=data)
     return data
 
 
