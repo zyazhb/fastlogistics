@@ -1,1 +1,0 @@
-pipenv run uvicorn main:app

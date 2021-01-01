@@ -4,13 +4,6 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-numpy = "*"
-matplotlib = "*"
-uvicorn = "*"
-fastapi = "*"
-pandas = "*"
-xlrd = "1.0"
-requests = "*"
 autopep8 = "*"
 flask = "*"
 
