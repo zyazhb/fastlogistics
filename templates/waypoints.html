@@ -61,7 +61,7 @@
 		// 构造路线导航类
 		var driving = new AMap.TruckDriving(drivingOption)
 		// 根据起终点经纬度规划驾车导航路线
-		driving.search([ {% for item in waylist %} { lnglat: [{{ item[0] }}, {{ item[1] }}] }, {% endfor %}], function (status, result) {
+		driving.search([ {lnglat:[116.583727,39.766743]},{% for item in waylist %} { lnglat: [{{ item[0] }}, {{ item[1] }}] }, {% endfor %} {lnglat:[116.583727,39.766743]}], function (status, result) {
 			// result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
 			if (status === 'complete') {
 				log.success('绘制驾车路线完成')
@@ -75,10 +75,10 @@
     <div class="aside-nav bounceInUp animated" id="aside-nav">
         <label for="" class="aside-menu" title="按住拖动">菜单</label>
 
-        <a href="javascript:void(0)" title="返回首页" class="menu-item menu-first">首页</a>
-        <a href="javascript:void(0)" title="QQ咨询" class="menu-item menu-second">QQ</a>
-        <a href="javascript:void(0)" title="一键预约" class="menu-item menu-third">预约</a>
-        <a href="javascript:void(0)" title="微信公众号" class="menu-item menu-line menu-fourth">关注<br>微信</a>
+        <a href="javascript:void(0)" title="调起高德地图导航" class="menu-item menu-line menu-first amap-call">开始<br>导航</a>
+        <a href="javascript:location.reload()" title="重新规划路线" class="menu-item menu-line menu-second">重新<br>规划</a>
+        <a href="javascript:void(0)" title="更改导航策略" class="menu-item menu-line menu-third">切换<br>策略</a>
+        <a href="javascript:void(0)" title="反馈问题" class="menu-item menu-line menu-fourth">问题<br>反馈</a>
     </div>
   
 

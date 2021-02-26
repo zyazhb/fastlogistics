@@ -16,8 +16,8 @@ body {
 
 .aside-nav {
 	position: fixed;
-	right: -50px;
-	top: 350px;
+	right: -80px;
+	top: 200px;
 	width: 260px;
 	height: 260px;
 	-webkit-filter: url(#goo);
@@ -38,7 +38,7 @@ body {
 	height: 70px;
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
-	background: #f34444;
+	background: #7798f1;
 	left: 0;
 	top: 0;
 	right: 0;
@@ -55,7 +55,7 @@ body {
 	position: absolute;
 	width: 60px;
 	height: 60px;
-	background-color: #FF7676;
+	background-color: #95a4e4;
 	left: 0;
 	top: 0;
 	right: 0;
@@ -78,7 +78,7 @@ body {
 	box-sizing: border-box
 }
 .aside-nav .menu-item:hover {
-	background: #A9C734;
+	background: #e49ed8;
 }
 .aside-nav .menu-line {
 	line-height: 20px;
