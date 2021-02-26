@@ -60,20 +60,14 @@
 		// 构造路线导航类
 		var driving = new AMap.TruckDriving(drivingOption)
 		// 根据起终点经纬度规划驾车导航路线
-		driving.search(new AMap.LngLat(116.583727,39.766743), new AMap.LngLat(116.583727,39.766743), {
-			// waypoints: [new AMap.LngLat(116.379028, 39.885042),
-			// new AMap.LngLat(116.606476, 39.842024),
-			// new AMap.LngLat(116.57941, 39.91557),
-			// ]
-			waypoints: [{% for item in waylist %}new AMap.LngLat	{{ item[0], item[1] }}, {% endfor %}]
-		}, function (status, result) {
-				// result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-				if (status === 'complete') {
-					log.success('绘制驾车路线完成')
-				} else {
-					log.error('获取驾车数据失败：' + result)
-				}
-			});
+		driving.search([ {% for item in waylist %} { lnglat: [{{ item[0] }}, {{ item[1] }}] }, {% endfor %}], function (status, result) {
+			// result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+			if (status === 'complete') {
+				log.success('绘制驾车路线完成')
+			} else {
+				log.error('获取驾车数据失败：' + result)
+			}
+		});
 	</script>
 </body>
 
