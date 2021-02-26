@@ -32,7 +32,7 @@
 	<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
 	<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 	<script type="text/javascript"
-		src="https://webapi.amap.com/maps?v=1.4.15&key=f8d7490415f9bad859abb04990348b18&plugin=AMap.Driving"></script>
+		src="https://webapi.amap.com/maps?v=1.4.15&key=f8d7490415f9bad859abb04990348b18&plugin=AMap.TruckDriving"></script>
 	<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
 </head>
 
@@ -48,15 +48,17 @@
 		});
 
 		var drivingOption = {
-			policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
-			ferry: 1, // 是否可以使用轮渡
+			// policy: AMap.DrivingPolicy.LEAST_TIME, // 其它policy参数请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingPolicy
+			// ferry: 1, // 是否可以使用轮渡
 			province: '{{province}}', // 车牌省份的汉字缩写 
 			number: '{{number}}',
 			map: map,
-			panel: 'panel'
+			panel: 'panel',
+			load: '{{load}}',
+			size: '{{size}}'
 		}
 		// 构造路线导航类
-		var driving = new AMap.Driving(drivingOption)
+		var driving = new AMap.TruckDriving(drivingOption)
 		// 根据起终点经纬度规划驾车导航路线
 		driving.search(new AMap.LngLat(116.583727,39.766743), new AMap.LngLat(116.583727,39.766743), {
 			// waypoints: [new AMap.LngLat(116.379028, 39.885042),
