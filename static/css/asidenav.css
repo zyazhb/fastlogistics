@@ -34,8 +34,8 @@ body {
 }
 .aside-nav .aside-menu {
 	position: absolute;
-	width: 70px;
-	height: 70px;
+	width: 50px;
+	height: 50px;
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
 	background: #7798f1;
@@ -45,23 +45,23 @@ body {
 	bottom: 0;
 	margin: auto;
 	text-align: center;
-	line-height: 70px;
+	line-height: 50px;
 	color: #fff;
-	font-size: 20px;
+	font-size: 16px;
 	z-index: 1;
 	cursor: move
 }
 .aside-nav .menu-item {
 	position: absolute;
-	width: 60px;
-	height: 60px;
+	width: 40px;
+	height: 40px;
 	background-color: #95a4e4;
 	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	margin: auto;
-	line-height: 60px;
+	line-height: 40px;
 	text-align: center;
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
@@ -72,7 +72,7 @@ body {
 	-moz-transition: transform .6s, background .5s, -moz-transform .6s;
 	transition: transform .6s, background .5s;
 	transition: transform .6s, background .5s, -webkit-transform .6s, -moz-transform .6s;
-	font-size: 14px;
+	font-size: 8px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box
@@ -81,8 +81,8 @@ body {
 	background: #e49ed8;
 }
 .aside-nav .menu-line {
-	line-height: 20px;
-	padding-top: 10px;
+	line-height: 17px;
+	padding-top: 3px;
 }
 .aside-nav:hover {
 	opacity: 1;

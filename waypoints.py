@@ -18,15 +18,17 @@ def waypoints():
         jsondata = jsondata.replace("\'", "\"")
         print("[*]"+jsondata)
         data = json.loads(jsondata)
-        size = data['data'][0]['info']['cartype']
+        size = data['data'][0]['info']['size']
         province = data['data'][0]['info']['province']
         number = data['data'][0]['info']['number']
         load = data['data'][0]['info']['load']
+        cartype = data['data'][0]['info']['cartype']
     except:
         size = 4
         province = '黑'
         number = "1NE11"
         load = 15
+        cartype = 0
 
     rightShift(waylist,1)
     print(waylist)
@@ -34,7 +36,7 @@ def waypoints():
     print(size, province, number)
     Best_path = [[18], [18, 10, 6, 11, 12], [12], [12], [9, 15, 3, 21], [
         11, 4], [4, 17], [5, 7, 20], [2, 19, 16, 14], [14, 13, 8, 1], [1]]
-    return render_template('waypoints.html', province=province, number=number,waylist=waylist,size=size,load=load)
+    return render_template('waypoints.html', province=province, number=number,waylist=waylist,size=size,load=load,cartype=cartype)
 
 
 @app.route('/move')
